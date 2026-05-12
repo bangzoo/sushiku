@@ -4,4 +4,5 @@
 
 [build.environment]
   NODE_VERSION = "20"
+  NPM_VERSION = "11"
   NEXT_TELEMETRY_DISABLED = "1"
