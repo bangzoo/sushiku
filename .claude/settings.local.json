@@ -1,0 +1,41 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npx tsc *)",
+      "Bash(node_modules/.bin/tsc --noEmit)",
+      "Bash(npm run *)",
+      "PowerShell(Get-Content \"D:\\\\npm-cache\\\\_logs\\\\2026-05-11T21_36_17_005Z-debug-0.log\" | Where-Object { $_ -match \"Invalid|error|WARN\" } | Select-Object -First 20)",
+      "Bash(python3 *)",
+      "PowerShell(Copy-Item *)",
+      "Bash(Copy-Item \"F:\\\\project bisnis sushi\\\\node_modules\\\\@rollup\\\\pluginutils\\\\node_modules\\\\picomatch\\\\lib\\\\picomatch.js\" \"F:\\\\project bisnis sushi\\\\node_modules\\\\picomatch\\\\lib\\\\picomatch.js\" -Force)",
+      "Bash(Copy-Item \"F:\\\\project bisnis sushi\\\\node_modules\\\\@rollup\\\\pluginutils\\\\node_modules\\\\picomatch\\\\lib\\\\scan.js\" \"F:\\\\project bisnis sushi\\\\node_modules\\\\picomatch\\\\lib\\\\scan.js\" -Force)",
+      "Bash(Copy-Item \"F:\\\\project bisnis sushi\\\\node_modules\\\\@rollup\\\\pluginutils\\\\node_modules\\\\picomatch\\\\lib\\\\utils.js\" \"F:\\\\project bisnis sushi\\\\node_modules\\\\picomatch\\\\lib\\\\utils.js\" -Force)",
+      "Bash(Write-Output \"Done copying picomatch lib files\")",
+      "PowerShell(cmd /c \"dir /a \"\"F:\\\\project bisnis sushi\\\\node_modules\\\\ts-interface-checker\"\"\")",
+      "PowerShell(cmd /c \"dir /a \"\"F:\\\\project bisnis sushi\\\\node_modules\\\\ts-interface-checker\\\\dist\"\"\")",
+      "PowerShell(cmd /c \"dir /a /b \"\"F:\\\\project bisnis sushi\\\\node_modules\\\\ts-interface-checker\\\\dist\"\"\")",
+      "PowerShell(Get-Item *)",
+      "PowerShell(cmd /c \"dir /s /b \"\"F:\\\\project bisnis sushi\\\\app\"\" 2>nul\" | Where-Object { $_ -notmatch \"node_modules\" })",
+      "PowerShell(cmd /c \"dir /a /b \"\"F:\\\\project bisnis sushi\\\\node_modules\\\\react-is\\\\cjs\"\"\")",
+      "PowerShell(cmd /c \"dir /a /b \"\"F:\\\\project bisnis sushi\\\\node_modules\\\\react-is\"\"\")",
+      "PowerShell(cmd /c \"dir /b \"\"F:\\\\project bisnis sushi\\\\node_modules\\\\next\\\\dist\\\\compiled\\\\@next\\\\font\\\\dist\"\"\")",
+      "PowerShell(cmd /c \"dir /b \"\"F:\\\\project bisnis sushi\\\\node_modules\\\\next\\\\dist\\\\font\"\" 2>nul\")",
+      "PowerShell(cmd /c \"dir /a /b \"\"F:\\\\project bisnis sushi\\\\node_modules\\\\isexe\"\"\")",
+      "PowerShell(cmd /c \"dir /a /b \"\"F:\\\\project bisnis sushi\\\\node_modules\\\\any-promise\"\"\")",
+      "PowerShell(cmd /c \"dir /a /b \"\"F:\\\\project bisnis sushi\\\\node_modules\\\\rgbcolor\"\"\")",
+      "Bash(timeout 20 npx next dev)",
+      "Bash(npx next *)",
+      "Bash(node -e \"const p = require\\('./package.json'\\); console.log\\(JSON.stringify\\({html2canvas: p.dependencies['html2canvas'], jspdf: p.dependencies['jspdf']}, null, 2\\)\\)\")",
+      "Bash(node --max-old-space-size=4096 node_modules/typescript/bin/tsc --noEmit)",
+      "Bash(Get-ChildItem -Path \"F:\\\\project bisnis sushi\" -Recurse -Directory)",
+      "Bash(Select-Object -First 20)",
+      "Bash(Format-Table FullName)",
+      "Bash(node -e \"const p=require\\('./node_modules/next-pwa/package.json'\\); console.log\\(p.version\\)\")",
+      "Bash(New-Item -ItemType Directory -Force \"F:\\\\project bisnis sushi\\\\app\\\\offline\")",
+      "Bash(Out-Null)",
+      "Bash(npm install *)",
+      "Bash(git init *)",
+      "Bash(git add *)"
+    ]
+  }
+}

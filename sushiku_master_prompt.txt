@@ -1,0 +1,791 @@
+╔══════════════════════════════════════════════════════════════════════╗
+║         SUSHI APP — MASTER PROMPT              ║
+║         PWA Full Fitur: Kasir + Manajemen + Laporan Keuangan        ║
+║         Bisa dibuka di iPhone Safari, install ke Home Screen        ║
+╚══════════════════════════════════════════════════════════════════════╝
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+[SYSTEM INSTRUCTION] — PASTE SEKALI, BERLAKU UNTUK SEMUA TAHAP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Kamu adalah ARSITEK UTAMA aplikasi web bernama "SushiKu" —
+
+aplikasi manajemen bisnis sushi rumahan yang dibangun sebagai
+Progressive Web App (PWA) sehingga bisa diakses dan di-install
+langsung dari iPhone Safari tanpa App Store.
+
+KONTEKS BISNIS (selalu ingat ini):
+- Nama bisnis    : Bisnis Sushi (nama bisa diganti user nanti)
+- Jenis usaha    : Jualan sushi dari rumah, baru mulai
+- Pemilik        : 1 orang (solo, tidak ada partner/karyawan)
+- Channel order  : WhatsApp + walk-in langsung di rumah
+- Pembayaran     : Campuran cash + transfer bank/QRIS
+- Platform       : PWA — harus optimal di iPhone Safari & Android Chrome
+- Tujuan app     : Bantu pemilik kelola semua aspek bisnis sushi
+                   dari 1 app: kasir, stok, keuangan, laporan,
+                   manajemen order WhatsApp, sampai analisis bisnis
+
+IDENTITAS & PERAN KAMU:
+Kamu adalah gabungan dari:
+- Senior Full-Stack Web Developer (Next.js 14, TypeScript, Tailwind)
+- PWA Specialist yang paham iOS Safari limitations & best practices
+- UX Designer yang paham kebutuhan UMKM Indonesia
+- Akuntan yang paham pembukuan usaha kecil
+- Business Analyst yang paham bisnis F&B rumahan Indonesia
+
+PRINSIP KERJA:
+1. PWA FIRST — semua fitur harus bekerja optimal di iPhone Safari
+   dan bisa di-install ke home screen (manifest + service worker)
+2. OFFLINE CAPABLE — fitur kasir harus tetap jalan tanpa internet
+   (IndexedDB untuk local storage, sync saat online)
+3. UI MOBILE-FIRST — semua layout didesain untuk layar HP dulu
+   baru tablet/desktop. Touch-friendly, tombol minimal 44px
+4. SIMPEL TAPI POWERFUL — owner bukan programmer, UI harus intuitif
+   tapi fitur harus lengkap untuk kelola bisnis serius
+5. CEPAT — kasir harus bisa catat order dalam < 15 detik
+6. AKURAT — data keuangan tidak boleh salah, selalu validasi
+7. Kode TypeScript bersih, lengkap, production-ready
+8. Selalu ingat konteks dari tahap-tahap sebelumnya
+9. Semua teks UI dalam Bahasa Indonesia yang casual dan friendly
+
+STACK TEKNOLOGI (tidak boleh berubah):
+- Framework     : Next.js 14 (App Router)
+- Language      : TypeScript (strict mode)
+- Styling       : Tailwind CSS + shadcn/ui
+- Database      : Supabase (PostgreSQL + Auth + Realtime + Storage)
+- Local Storage : IndexedDB (via Dexie.js) untuk offline support
+- State         : Zustand + React Query (TanStack)
+- Charts        : Recharts
+- PDF Export    : jsPDF + html2canvas
+- PWA           : next-pwa (manifest + service worker)
+- Notifikasi    : Web Push API (via web-push library)
+- Deployment    : Vercel (gratis, auto-deploy dari GitHub)
+- Icons         : Lucide React
+
+PWA REQUIREMENTS KHUSUS iOS SAFARI:
+- manifest.json wajib ada dengan apple-touch-icon
+- Meta tags: apple-mobile-web-app-capable, status-bar-style
+- Service worker untuk offline caching
+- TIDAK bisa pakai Web Push di iOS 15 ke bawah (handle gracefully)
+- TIDAK bisa akses GPS background di PWA iOS (tidak dibutuhkan di app ini)
+- Splash screen untuk berbagai ukuran iPhone
+
+FITUR YANG AKAN DIBANGUN (8 tahap):
+Tahap 1 → Fondasi PWA + Database + Setup
+Tahap 2 → Manajemen Menu Sushi
+Tahap 3 → Kasir & Catat Order (WhatsApp + Walk-in)
+Tahap 4 → Manajemen Stok Bahan Baku
+Tahap 5 → Keuangan & Petty Cash
+Tahap 6 → Laporan & Analisis Bisnis
+Tahap 7 → Fitur Pelanggan & Order WhatsApp
+Tahap 8 → Dashboard Owner + Polish + Deploy ke Vercel
+
+WARNA & BRAND:
+- Merah Jepang  : #DC2626 (aksen utama)
+- Hitam Elegan  : #0F0F0F (teks utama)
+- Krem Hangat   : #FAF7F2 (background)
+- Abu Lembut    : #F3F4F6 (surface)
+- Putih         : #FFFFFF (card)
+Vibe: modern, bersih, sedikit Japanese aesthetic tapi tetap kasual
+
+ATURAN FORMAT RESPONS:
+- Header jelas (## Nama Section)
+- Kode selalu dalam code block dengan bahasa yang benar
+- Setelah selesai tiap tahap, tulis:
+  "✅ TAHAP [N] SELESAI — [deskripsi singkat]"
+  "➡️ SIAP LANJUT KE TAHAP [N+1]: [nama tahap]"
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAHAP 1 — FONDASI PWA + DATABASE + SETUP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Bangun fondasi yang solid untuk SushiKu PWA.
+
+1. STRUKTUR FOLDER NEXT.JS 14
+   Buat folder structure lengkap App Router yang mencakup
+   semua 8 fitur. Sertakan penjelasan fungsi setiap folder.
+
+2. PACKAGE.JSON
+   Semua dependencies yang dibutuhkan untuk seluruh project
+   dengan versi yang kompatibel.
+
+3. PWA SETUP LENGKAP
+   A. manifest.json:
+      - name, short_name, description
+      - icons: semua ukuran (72, 96, 128, 144, 152, 192, 384, 512)
+      - apple-touch-icon untuk setiap ukuran iPhone
+      - theme_color, background_color, display: standalone
+      - start_url, scope, orientation: portrait
+   
+   B. next.config.js dengan next-pwa:
+      - Service worker setup
+      - Cache strategy: network-first untuk API, cache-first untuk assets
+      - Offline fallback page
+   
+   C. Meta tags di layout.tsx untuk iOS:
+      - apple-mobile-web-app-capable: yes
+      - apple-mobile-web-app-status-bar-style: black-translucent
+      - apple-mobile-web-app-title
+      - Splash screen untuk iPhone 14, 13, 12, SE
+   
+   D. Instruksi "Add to Home Screen" untuk user:
+      Komponen InstallPrompt.tsx yang muncul pertama kali buka
+      di Safari, menjelaskan cara install ke home screen iPhone
+
+4. DATABASE SCHEMA SUPABASE (LENGKAP)
+   SQL migration untuk semua tabel:
+
+   A. menu_items (menu sushi)
+      (id, nama, deskripsi, harga_jual, harga_modal, kategori,
+       foto_url, tersedia: boolean, urutan_tampil, created_at)
+      Kategori: 'nigiri'|'maki'|'sashimi'|'roll'|'set_menu'|
+                'minuman'|'tambahan'
+
+   B. orders (transaksi)
+      (id, nomor_order, tanggal, waktu, tipe: 'walkin'|'whatsapp',
+       nama_customer, nomor_wa, items_json, catatan_order,
+       total_harga, metode_bayar: 'cash'|'transfer'|'qris',
+       status: 'pending'|'proses'|'selesai'|'batal',
+       dibayar: boolean, created_at)
+
+   C. order_items (detail item per order)
+      (id, order_id, menu_item_id, nama_item, harga_satuan,
+       jumlah, catatan_item, subtotal)
+
+   D. bahan_baku (stok bahan)
+      (id, nama, satuan, stok_sekarang, stok_minimum,
+       harga_per_satuan, kategori, created_at, updated_at)
+
+   E. stok_log (riwayat perubahan stok)
+      (id, bahan_baku_id, jenis: 'masuk'|'keluar'|'koreksi',
+       jumlah, keterangan, harga_total, created_at)
+
+   F. pengeluaran (semua pengeluaran)
+      (id, tanggal, kategori: 'bahan_baku'|'operasional'|
+       'kemasan'|'transport'|'promosi'|'lain',
+       keterangan, jumlah, bukti_url, created_at)
+
+   G. pemasukan_lain (pemasukan selain penjualan)
+      (id, tanggal, keterangan, jumlah, created_at)
+
+   H. customers (data pelanggan)
+      (id, nama, nomor_wa, alamat, total_order, total_belanja,
+       pertama_order, terakhir_order, catatan, created_at)
+
+   I. daily_summary (rekap harian otomatis)
+      (id, tanggal, total_order, total_omzet, total_cash,
+       total_transfer, hpp_total, laba_kotor, pengeluaran_operasional,
+       laba_bersih, created_at)
+
+   Sertakan: indexes, RLS policies, triggers untuk auto-update
+   daily_summary dan customers stats.
+
+5. DEXIE.JS SETUP (IndexedDB untuk offline)
+   File lib/db.ts:
+   - Mirror schema utama untuk offline: orders, order_items,
+     menu_items, pengeluaran
+   - Sync queue: tabel untuk antri data yang belum ter-sync
+   - Fungsi syncToSupabase() yang jalan saat online kembali
+
+6. KONSTANTA & TYPES GLOBAL
+   - constants/index.ts: warna, kategori menu, kategori pengeluaran,
+     format Rupiah, pesan WhatsApp template
+   - types/index.ts: semua TypeScript interface
+
+7. SAMPLE DATA
+   SQL INSERT untuk menu sushi awal (minimal 15 item realistis):
+   - Nigiri: Salmon, Tuna, Ebi, Tamago (harga & modal realistis)
+   - Maki: California Roll, Salmon Roll, Vegetable Roll
+   - Sashimi: Salmon 5pcs, Tuna 5pcs
+   - Set Menu: Set A (10pcs mix), Set B (15pcs mix)
+   - Minuman: Green Tea, Ocha, Air Mineral
+   - Tambahan: Wasabi extra, Gari extra, Soy Sauce extra
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAHAP 2 — MANAJEMEN MENU SUSHI
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Kirim setelah Tahap 1 selesai]
+
+Lanjut Tahap 2. Bangun sistem manajemen menu sushi yang lengkap.
+
+1. HALAMAN DAFTAR MENU (/menu)
+   - Grid menu dengan foto, nama, harga jual, harga modal
+   - Filter per kategori: [Semua] [Nigiri] [Maki] [Sashimi]
+     [Roll] [Set Menu] [Minuman] [Tambahan]
+   - Toggle tersedia/tidak tersedia (langsung update tanpa reload)
+   - Search menu by nama
+   - Tombol [+ Tambah Menu] di pojok kanan bawah (FAB)
+   - Badge "Tidak Tersedia" di atas foto kalau sedang unavailable
+
+2. FORM TAMBAH / EDIT MENU
+   Field yang dibutuhkan:
+   - Foto menu (upload dari kamera iPhone atau galeri)
+   - Nama menu (wajib)
+   - Kategori (dropdown)
+   - Deskripsi (opsional)
+   - Harga jual (Rp, wajib)
+   - Harga modal / HPP (Rp, untuk kalkulasi laba)
+   - Margin otomatis tampil: "Margin: Rp 8.000 (40%)"
+   - Urutan tampil di kasir (drag & drop reorder)
+   - Status: Tersedia / Tidak Tersedia
+
+3. DETAIL MENU
+   Tap menu → bottom sheet detail:
+   - Foto besar + semua info
+   - Statistik: terjual bulan ini, total pendapatan dari menu ini
+   - Menu terlaris badge jika masuk top 3
+   - Tombol [Edit] [Hapus] [Tandai Tidak Tersedia]
+   - Hapus menu: soft delete (tidak hilang dari history order)
+
+4. ANALISIS MENU KECIL
+   Di bawah daftar menu, section "Performa Menu":
+   - Top 3 terlaris minggu ini
+   - Menu yang belum terjual 7 hari terakhir (perlu review)
+   - Menu dengan margin tertinggi (rekomendasikan untuk promo)
+
+5. KOMPONEN PENDUKUNG
+   - MenuCard.tsx: kartu menu reusable (dipakai juga di kasir)
+   - MenuForm.tsx: form tambah/edit yang reusable
+   - ImageUpload.tsx: komponen upload foto dengan preview & crop
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAHAP 3 — KASIR & CATAT ORDER
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Kirim setelah Tahap 2 selesai]
+
+Lanjut Tahap 3. Ini core feature utama — sistem kasir untuk
+catat order walk-in dan order WhatsApp. Target: selesai dalam < 15 detik.
+
+1. HALAMAN KASIR (/kasir)
+   Layout 2 bagian:
+   
+   ATAS — GRID MENU:
+   - Tampil semua menu yang tersedia sebagai card touchable
+   - Tap = langsung tambah 1 ke keranjang dengan animasi
+   - Long press = modal pilih jumlah (1-50)
+   - Badge counter di pojok card kalau sudah ada di keranjang
+   - Filter kategori (horizontal scroll chip)
+   - Search menu (untuk kalau menu sudah banyak)
+   - Menu tidak tersedia: tampil redup, tidak bisa di-tap
+   
+   BAWAH — KERANJANG (sticky bottom panel):
+   - Jumlah item + total harga
+   - Tap panel → expand jadi full screen keranjang
+   - Di keranjang: list item, quantity +/-, hapus item, catatan per item
+   - Tombol [Bayar Sekarang] warna merah besar
+
+2. PILIH TIPE ORDER (muncul sebelum keranjang)
+   Saat pertama tap menu, pilih dulu:
+   [🚶 Walk-in] [📱 WhatsApp Order]
+   
+   Walk-in: langsung ke kasir, nama customer opsional
+   WhatsApp: wajib isi nama + nomor WA customer
+
+3. LAYAR PEMBAYARAN
+   - Tampil total besar dan jelas
+   - Pilih metode: [💵 Cash] [🏦 Transfer] [📱 QRIS]
+   - Jika cash: input "Uang diterima" → auto hitung kembalian
+   - Jika transfer/QRIS: tampil info rekening (dari settings)
+     + tombol "Konfirmasi Sudah Dibayar"
+   - Catatan order (opsional)
+   - Tombol [Selesaikan Order]
+   - Setelah selesai: animasi sukses + konfeti kecil
+
+4. STRUK DIGITAL
+   Setelah order selesai, tampil struk digital:
+   - Nomor order, tanggal, jam
+   - List item + qty + subtotal
+   - Total, metode bayar, kembalian (jika cash)
+   - Nama bisnis + ucapan terima kasih
+   - Tombol [Kirim ke WhatsApp Customer]
+     (auto buka WA dengan pesan struk yang sudah diformat)
+   - Tombol [Order Baru] untuk reset kasir
+
+5. KIRIM STRUK VIA WHATSAPP
+   Format pesan WhatsApp otomatis:
+   "🍣 *[Nama Bisnis Sushi]*
+   
+   Halo [Nama Customer]! 
+   Terima kasih sudah order ya 😊
+   
+   📋 *Detail Order #[nomor]*
+   [item] x[qty] — Rp [harga]
+   ...
+   ─────────────────
+   💰 *Total: Rp [total]*
+   💳 Bayar via: [metode]
+   
+   Pesanan sedang disiapkan!
+   Est. selesai: 15-20 menit 🍱"
+   
+   Tap tombol → buka WhatsApp langsung ke nomor customer
+
+6. ANTRIAN ORDER (ORDER QUEUE)
+   Halaman /antrian — tampil semua order yang status "proses":
+   - Card per order: nomor, nama customer, item summary, waktu order
+   - Warna berdasarkan lama tunggu:
+     * < 15 menit: hijau
+     * 15-30 menit: kuning
+     * > 30 menit: merah (perlu diprioritaskan)
+   - Tap card → lihat detail + tombol [Tandai Selesai]
+   - Notif push saat ada order WhatsApp baru masuk
+
+7. RIWAYAT ORDER (/riwayat)
+   - List semua order, terbaru di atas
+   - Filter: hari ini, minggu ini, bulan ini, semua
+   - Filter tipe: walk-in / WhatsApp / semua
+   - Search by nama customer atau nomor order
+   - Setiap item: nomor, waktu, customer, total, status, metode bayar
+   - Tap → detail order lengkap + opsi batalkan (dengan alasan)
+
+8. OFFLINE SUPPORT
+   Kasir harus tetap bisa dipakai tanpa internet:
+   - Data menu tersimpan di IndexedDB (Dexie.js)
+   - Order tersimpan lokal dulu jika offline
+   - Indikator "Offline Mode" di header saat tidak ada koneksi
+   - Auto-sync semua data saat koneksi kembali
+   - Konflik sync: last-write-wins dengan timestamp
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAHAP 4 — MANAJEMEN STOK BAHAN BAKU
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Kirim setelah Tahap 3 selesai]
+
+Lanjut Tahap 4. Bangun sistem manajemen stok bahan baku sushi.
+
+1. HALAMAN STOK (/stok)
+   - List semua bahan baku dengan stok sekarang
+   - Warna indikator stok:
+     * Hijau: stok aman (> stok minimum × 2)
+     * Kuning: stok menipis (antara minimum dan minimum × 2)
+     * Merah: stok kritis (≤ stok minimum) + badge "Perlu Beli!"
+   - Sort: by nama, by stok kritis dulu, by kategori
+   - Search bahan
+   - Summary di atas: "X bahan kritis, Y bahan menipis"
+
+2. FORM TAMBAH BAHAN BAKU
+   Field:
+   - Nama bahan (misal: Salmon fillet, Nori, Shari/nasi sushi)
+   - Kategori: ikan/seafood, sayuran, bahan_dasar, bumbu, kemasan
+   - Satuan: gram, kg, pcs, lembar, botol, pack
+   - Stok awal (jumlah)
+   - Stok minimum (batas alert)
+   - Harga per satuan (untuk kalkulasi HPP)
+
+3. UPDATE STOK
+   Tombol [+ Stok Masuk] dan [- Stok Keluar] di setiap bahan:
+   
+   Stok Masuk (belanja bahan):
+   - Jumlah yang dibeli
+   - Harga beli total (auto hitung harga per satuan baru)
+   - Tanggal beli
+   - Keterangan (beli di mana)
+   - Auto catat ke tabel pengeluaran kategori "bahan_baku"
+   
+   Stok Keluar (pemakaian):
+   - Jumlah yang dipakai
+   - Untuk order apa (opsional, link ke order)
+   - Keterangan
+   
+   Koreksi Stok:
+   - Jika ada selisih hitung fisik vs sistem
+   - Wajib isi alasan koreksi
+
+4. RIWAYAT STOK
+   Per bahan: timeline masuk keluar dengan grafik mini
+   Total stok masuk vs keluar bulan ini
+
+5. ALERT STOK HABIS
+   - Notifikasi push saat stok bahan turun ke level minimum
+   - Halaman "Perlu Dibeli" — list semua bahan kritis
+   - Tombol [Buat Daftar Belanja] → generate teks list belanja
+     yang bisa langsung di-share via WhatsApp
+
+6. KALKULASI HPP OTOMATIS
+   Setiap menu sushi bisa di-link ke bahan baku:
+   - Input: salmon roll butuh berapa gram salmon, berapa gram nori, dll
+   - Sistem auto kalkulasi HPP berdasarkan harga bahan terkini
+   - Update harga modal di menu secara otomatis
+   - Tampil HPP aktual vs harga modal yang di-set manual
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAHAP 5 — KEUANGAN & PETTY CASH
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Kirim setelah Tahap 4 selesai]
+
+Lanjut Tahap 5. Bangun sistem pencatatan keuangan lengkap.
+
+1. HALAMAN KEUANGAN (/keuangan)
+   4 kartu summary di atas:
+   - Pemasukan hari ini (dari penjualan)
+   - Pengeluaran hari ini
+   - Laba bersih hari ini
+   - Saldo kas (cash di tangan)
+
+2. CATAT PENGELUARAN
+   Kategori pengeluaran:
+   🛒 Bahan Baku (auto tercatat dari Tahap 4, bisa manual juga)
+   📦 Kemasan (wadah, plastik, chopstick, soy sauce sachet)
+   🔥 Operasional (gas, listrik, air)
+   🚗 Transport (belanja bahan, antar pesanan)
+   📱 Promosi (cetak menu, iklan IG, pulsa)
+   💰 Lain-lain (wajib isi keterangan)
+   
+   Field: kategori, jumlah (Rp), keterangan detail,
+          foto bukti struk (kamera/galeri), tanggal
+
+3. CATAT PEMASUKAN LAIN
+   Selain penjualan, ada pemasukan lain:
+   - Modal tambahan yang dimasukkan
+   - Pengembalian uang
+   - Lain-lain
+   Field: keterangan, jumlah, tanggal
+
+4. REKAP HARIAN
+   Halaman /keuangan/rekap:
+   
+   PEMASUKAN:
+   - Penjualan cash   : Rp xxx
+   - Penjualan transfer: Rp xxx
+   - Pemasukan lain   : Rp xxx
+   - TOTAL PEMASUKAN  : Rp xxx
+   
+   PENGELUARAN (per kategori):
+   - Bahan baku       : Rp xxx
+   - Kemasan          : Rp xxx
+   - Operasional      : Rp xxx
+   - Transport        : Rp xxx
+   - Promosi          : Rp xxx
+   - TOTAL PENGELUARAN: Rp xxx
+   
+   HASIL:
+   - LABA BERSIH      : Rp xxx
+   - Margin           : xx%
+
+5. FORMULA KEUANGAN
+   HPP Total = Total harga modal semua item terjual
+   Laba Kotor = Total Omzet - HPP Total
+   Laba Bersih = Laba Kotor - Pengeluaran Operasional
+                - Kemasan - Transport - Promosi - Lain-lain
+   Margin = (Laba Bersih / Total Omzet) × 100%
+
+6. EXPORT PDF LAPORAN HARIAN
+   Tombol [Export PDF] di halaman rekap:
+   - Header: nama bisnis + tanggal
+   - Tabel pemasukan
+   - Tabel pengeluaran per kategori
+   - Ringkasan laba & margin
+   - Share via WhatsApp atau simpan ke file
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAHAP 6 — LAPORAN & ANALISIS BISNIS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Kirim setelah Tahap 5 selesai]
+
+Lanjut Tahap 6. Bangun dashboard laporan dan analisis bisnis
+yang membantu owner buat keputusan yang lebih baik.
+
+1. LAPORAN MINGGUAN (/laporan/mingguan)
+   - Bar chart: omzet per hari 7 hari terakhir
+   - Line chart: laba bersih per hari
+   - Hari terbaik minggu ini (omzet tertinggi)
+   - Hari paling sepi (bisa jadi insight untuk promo)
+   - Total minggu ini vs minggu lalu (naik/turun berapa %)
+   - Rata-rata order per hari
+   - Rata-rata nilai per order (Average Order Value)
+
+2. LAPORAN BULANAN (/laporan/bulanan)
+   - Grafik tren omzet per minggu dalam bulan
+   - Pie chart: breakdown omzet per kategori menu
+   - Pie chart: breakdown pengeluaran per kategori
+   - Perbandingan bulan ini vs bulan lalu
+   - Total order, total pelanggan unik, repeat customer %
+   - Best seller bulan ini (top 5 menu)
+   - Menu paling tidak laku (bottom 3)
+
+3. ANALISIS MENU (/laporan/menu)
+   Tabel ranking semua menu:
+   - Nama menu | Qty terjual | Total omzet | Margin | Rating
+   - Filter: minggu ini, bulan ini, semua waktu
+   - Sort by: terlaris, omzet tertinggi, margin tertinggi
+   - Rekomendasi AI sederhana (rule-based, tidak butuh Gemini):
+     * Menu dengan margin > 50% tapi penjualan rendah → rekomendasikan promo
+     * Menu yang tidak terjual 14 hari → pertimbangkan hapus dari menu
+     * Menu terlaris dengan stok bahan kritis → alert segera beli bahan
+
+4. ANALISIS WAKTU
+   - Heatmap jam ramai: jam berapa paling banyak order
+   - Hari dalam seminggu: hari apa paling ramai
+   - Insight: "Order paling banyak masuk Jumat-Minggu jam 11-13"
+   - Saran: "Siapkan bahan lebih banyak untuk akhir pekan"
+
+5. ANALISIS PELANGGAN
+   - Total pelanggan unik
+   - Pelanggan baru vs pelanggan lama bulan ini
+   - Top 5 pelanggan (by nilai belanja)
+   - Rata-rata frekuensi order per pelanggan
+   - Pelanggan yang sudah lama tidak order (> 30 hari)
+
+6. TARGET & PENCAPAIAN
+   Owner bisa set target bulanan:
+   - Target omzet bulan ini: Rp xxx
+   - Progress bar: sudah tercapai berapa %
+   - Estimasi: "Dengan rata-rata sekarang, bulan ini akan mencapai Rp xxx"
+   - Target laba bersih
+   - Target jumlah order
+
+7. EXPORT LAPORAN BULANAN PDF
+   Laporan profesional yang bisa disimpan/share:
+   - Cover page: nama bisnis + periode
+   - Executive summary (ringkasan 1 halaman)
+   - Detail tabel semua transaksi
+   - Grafik omzet & laba
+   - Rekomendasi bisnis berdasarkan data
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAHAP 7 — FITUR PELANGGAN & ORDER WHATSAPP
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Kirim setelah Tahap 6 selesai]
+
+Lanjut Tahap 7. Bangun fitur manajemen pelanggan dan tools
+untuk handle order WhatsApp lebih efisien.
+
+1. DATABASE PELANGGAN (/pelanggan)
+   - List semua pelanggan yang pernah order
+   - Setiap pelanggan: nama, nomor WA, total order, total belanja,
+     terakhir order, label (VIP/Regular/Baru)
+   - Label otomatis:
+     * VIP: order > 10x atau belanja > Rp 500.000 total
+     * Regular: order 3-10x
+     * Baru: order < 3x
+   - Search by nama atau nomor WA
+   - Tap → detail profil pelanggan lengkap
+
+2. DETAIL PROFIL PELANGGAN
+   - Info dasar + stats lengkap
+   - Riwayat semua order (dengan total)
+   - Menu favorit (yang paling sering dipesan)
+   - Tombol [Chat WhatsApp] → buka WA langsung
+   - Catatan tentang pelanggan (alergi, preferensi, dll)
+   - Tombol [Kirim Promo] → generate pesan promo personal
+
+3. TOOLS ORDER WHATSAPP
+   Halaman /wa-tools — helper untuk handle order WA lebih cepat:
+   
+   A. GENERATOR MENU DIGITAL
+      - Generate gambar/teks menu yang bisa di-share ke WA grup
+      - Format teks menu yang rapi untuk di-paste ke WA:
+        "🍣 *MENU SUSHI [NAMA BISNIS]*
+        
+        *NIGIRI*
+        • Salmon Nigiri — Rp 15.000/pcs
+        • Tuna Nigiri — Rp 15.000/pcs
+        ...
+        
+        Order: chat di sini ya! 😊"
+      - Update otomatis kalau ada perubahan menu/harga
+   
+   B. TEMPLATE PESAN CEPAT
+      Koleksi template yang bisa langsung di-copy:
+      - Konfirmasi order diterima
+      - Estimasi waktu siap
+      - Struk pembayaran
+      - Konfirmasi pembayaran diterima
+      - Pesanan siap diambil/diantar
+      - Follow-up kepuasan pelanggan
+      Semua bisa dikustomisasi dengan nama customer & detail order
+   
+   C. QUICK REPLY GENERATOR
+      Input: nomor order → generate semua pesan yang dibutuhkan
+      untuk order itu (konfirmasi, struk, ready notif) dalam 1 tap
+
+4. PROGRAM LOYALITAS SEDERHANA
+   Sistem poin untuk pelanggan setia:
+   - Setiap Rp 10.000 belanja = 1 poin
+   - 100 poin = diskon Rp 10.000
+   - Catat poin di profil pelanggan
+   - Saat kasir input order WA, bisa cek & redeem poin
+   - Generate pesan WA otomatis: "Poin kamu sekarang: [X] poin 🎉"
+
+5. BROADCAST PROMO
+   Kirim pesan promo ke grup pelanggan:
+   - Pilih target: semua / VIP / Regular / Baru
+   - Template promo: flash sale, menu baru, hari spesial
+   - Generate teks promo yang siap di-paste ke WA
+   - Catat history promo yang pernah dikirim
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TAHAP 8 — DASHBOARD OWNER + POLISH + DEPLOY
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+[Kirim setelah Tahap 7 selesai]
+
+Tahap terakhir! Bangun dashboard utama, polish semua UI,
+dan deploy ke Vercel biar bisa diakses dari iPhone.
+
+1. DASHBOARD UTAMA (/) — HOME SCREEN
+   Tampil saat buka app. Semua info penting dalam 1 scroll:
+   
+   HEADER:
+   - Greeting dinamis berdasarkan jam: "Selamat pagi! ☀️"
+   - Tanggal hari ini
+   - Indikator online/offline
+   
+   KARTU HARI INI (4 kartu grid):
+   - Omzet hari ini (update real-time)
+   - Jumlah order hari ini
+   - Laba bersih hari ini
+   - Order pending (yang belum selesai)
+   
+   ALERT PENTING (kalau ada):
+   - Stok bahan yang kritis (merah)
+   - Order pending > 30 menit (kuning)
+   
+   GRAFIK MINI:
+   - Bar chart omzet 7 hari terakhir (compact)
+   
+   QUICK ACTIONS (tombol shortcut):
+   [+ Order Baru] [+ Pengeluaran] [Lihat Antrian] [Laporan]
+   
+   AKTIVITAS TERBARU:
+   - 5 order terakhir hari ini dengan status
+
+2. NAVIGASI BOTTOM BAR
+   5 tab utama (iPhone-friendly, 44px minimum tap target):
+   [🏠 Home] [🍱 Kasir] [📦 Stok] [💰 Keuangan] [📊 Laporan]
+   
+   Sub-navigasi dalam setiap tab lewat header atau drawer
+
+3. SETTINGS (/settings)
+   - Profil bisnis: nama, logo, alamat, nomor WA bisnis
+   - Info rekening bank + nomor QRIS (tampil di pembayaran)
+   - Target omzet bulanan
+   - Jam operasional (untuk reminder)
+   - Notifikasi: atur mana yang aktif
+   - Backup & export data (CSV semua tabel)
+   - Reset data (dengan konfirmasi ganda)
+   - Tentang app + versi
+
+4. ONBOARDING FLOW (pertama kali buka)
+   3 step yang tidak bisa di-skip:
+   Step 1: Nama bisnis sushi + upload logo
+   Step 2: Info rekening bank / QRIS untuk pembayaran
+   Step 3: Tambah minimal 1 menu
+   → Selesai: langsung ke dashboard dengan tour singkat
+
+5. INSTALL PWA PROMPT
+   Komponen yang muncul di Safari iPhone:
+   - Card dengan instruksi bergambar cara install
+   - "Tap ikon Share → Add to Home Screen"
+   - Bisa dismiss, muncul lagi setelah 3 hari jika belum install
+   - Detect apakah sudah installed (sembunyikan prompt kalau sudah)
+
+6. POLISH UI MENYELURUH
+   Pastikan semua halaman konsisten:
+   - Loading skeleton di setiap fetch data
+   - Empty state friendly di setiap halaman kosong
+     Contoh: "Belum ada order hari ini 🍣 Ayo mulai jualan!"
+   - Error state informatif (bukan error code)
+   - Haptic feedback di iOS untuk setiap aksi penting
+   - Semua angka format Rupiah (Rp 125.000)
+   - Animasi transisi halaman yang smooth
+   - Pull-to-refresh di semua list
+   - Infinite scroll di riwayat order
+
+7. PERFORMA & SEO
+   - Lighthouse score target: PWA > 90, Performance > 80
+   - Image optimization (next/image)
+   - Font loading optimization
+   - Critical CSS inline
+   - Lazy loading untuk halaman non-kritis
+
+8. DEPLOY KE VERCEL (LANGKAH DEMI LANGKAH)
+   Panduan lengkap untuk pemula:
+   
+   A. Push ke GitHub:
+      - Buat repo baru di github.com
+      - git init, git add, git commit, git push
+   
+   B. Connect ke Vercel:
+      - Daftar vercel.com (gratis) dengan akun GitHub
+      - Import repo → auto detect Next.js
+      - Set environment variables (Supabase URL, API keys)
+      - Deploy!
+   
+   C. Custom domain (opsional):
+      - Beli domain .com di Niagahoster (~Rp 150.000/tahun)
+      - Connect ke Vercel (gratis)
+      - HTTPS otomatis
+   
+   D. Test PWA di iPhone:
+      - Buka URL Vercel di Safari iPhone
+      - Tap Share → Add to Home Screen
+      - Verifikasi semua fitur bekerja
+      - Test offline mode (airplane mode)
+   
+   E. Checklist sebelum pakai beneran:
+      [ ] Semua formula keuangan dicek manual
+      [ ] Test kasir 10 order berturut tanpa crash
+      [ ] Test offline mode di iPhone
+      [ ] Test install PWA di iPhone berhasil
+      [ ] Backup database Supabase pertama kali
+      [ ] Semua template WA sudah dikustomisasi
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+TIPS PENGGUNAAN DI GOOGLE AI STUDIO
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Gunakan 1 sesi dari awal sampai akhir agar AI ingat semua konteks
+
+2. Jika AI mulai lupa, kirim reminder ini:
+   "Ingat: kita membangun SushiKu PWA untuk bisnis sushi rumahan,
+   solo owner, order WA + walk-in, bayar cash+transfer.
+   Stack: Next.js 14 + Supabase + Tailwind + Dexie.js.
+   Lanjutkan Tahap [N]."
+
+3. Follow-up yang bisa ditambahkan per tahap:
+   - "Tambahkan fitur diskon/promo di kasir"
+   - "Tambahkan fitur delivery dengan ongkir"
+   - "Buat halaman menu publik yang bisa diakses customer"
+   - "Tambahkan multi-bahasa (Indo + Inggris)"
+
+4. Model rekomendasi: Gemini 1.5 Pro
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+URUTAN PRIORITAS KALAU WAKTU TERBATAS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+🔴 WAJIB ADA SEBELUM MULAI JUALAN:
+   Tahap 1 → Fondasi & database
+   Tahap 2 → Manajemen menu
+   Tahap 3 → Kasir & order
+
+🟡 PENTING DALAM MINGGU PERTAMA JUALAN:
+   Tahap 5 → Keuangan & petty cash
+   Tahap 8 → Dashboard + deploy (biar bisa dibuka di iPhone)
+
+🟢 TAMBAHKAN SETELAH BISNIS JALAN:
+   Tahap 4 → Manajemen stok
+   Tahap 6 → Laporan & analisis
+   Tahap 7 → Tools WhatsApp & pelanggan
+
+Dengan Tahap 1 + 2 + 3 + 8 saja, app sudah bisa dipakai
+untuk jualan sushi dari hari pertama di iPhone kamu! 🍣
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Generated for SushiKu — Aplikasi Manajemen Bisnis Sushi Rumahan
